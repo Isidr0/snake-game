@@ -1,29 +1,46 @@
 from turtle import Turtle
 
+# defined constants for variables that won't change.
+STARTING_POSITIONS = [(0, 0), (-20, 0), (-40, 0)]
+MOVE_DISTANCE = 20
+
 
 class Snake:
-    def snake(self):
+
+    def __init__(self):
         # create three separate turtles in a line. they should be white squares. turtles are 20x20 pixels.
+        # each time this class is instantiated it will create the segments list and create the snake using the
+        # create_snake method
+        self.segments = []
+        self.create_snake()
 
-        starting_positions = [(0, 0), (-20, 0), (-40, 0)]
-
-        segments = []
-
-        for position in starting_positions:
+    def create_snake(self):
+        for position in STARTING_POSITIONS:
             new_segment = Turtle("square")
             new_segment.color("white")
             new_segment.penup()
             new_segment.goto(position)
-            segments.append(new_segment)
-
-        return segments
+            self.segments.append(new_segment)
 
     def move(self):
         # segment[0] is not included in the for loop. it moves independently of the other segments.
         # then the segments in the for loop will follow the first segment.
         # move the snake forward
-        for seg_num in range(len(segments) - 1, 0, -1):
-            new_x = segments[seg_num - 1].xcor()
-            new_y = segments[seg_num - 1].ycor()
-            segments[seg_num].goto(new_x, new_y)
-        segments[0].forward(20)
+        # call the move() method to move the snake forward
+        for seg_num in range(len(self.segments) - 1, 0, -1):
+            new_x = self.segments[seg_num - 1].xcor()
+            new_y = self.segments[seg_num - 1].ycor()
+            self.segments[seg_num].goto(new_x, new_y)
+        self.segments[0].forward(MOVE_DISTANCE)
+
+    def up(self):
+        self.segments[0].setheading(90)
+
+    def down(self):
+        self.segments[0].setheading(270)
+
+    def left(self):
+        self.segments[0].setheading(180)
+
+    def right(self):
+        self.segments[0].setheading(0)
