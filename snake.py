@@ -8,6 +8,7 @@ DOWN = 270
 LEFT = 180
 RIGHT = 0
 
+
 class Snake:
 
     def __init__(self):
@@ -17,14 +18,21 @@ class Snake:
         self.segments = []
         self.create_snake()
         self.head = self.segments[0]
+        # self.body = self.segments[1:]
 
     def create_snake(self):
         for position in STARTING_POSITIONS:
-            new_segment = Turtle("square")
-            new_segment.color("white")
-            new_segment.penup()
-            new_segment.goto(position)
-            self.segments.append(new_segment)
+            self.add_segment(position)
+
+    def add_segment(self, position):
+        new_segment = Turtle("square")
+        new_segment.color("white")
+        new_segment.penup()
+        new_segment.goto(position)
+        self.segments.append(new_segment)
+
+    def extend(self):
+        self.add_segment(self.segments[-1].position())
 
     def move(self):
         # segment[0] is not included in the for loop. it moves independently of the other segments.
